@@ -5,28 +5,44 @@ DIR_CONFIG="/etc/v2ray"
 DIR_RUNTIME="/usr/bin"
 DIR_TMP="$(mktemp -d)"
 
-# Write V2Ray configuration
+# Write V2Ray configuration (only one inbound using TCP + Reality)
 cat << EOF > ${DIR_TMP}/heroku.json
 {
-    "inbounds": [{
-        "port": ${PORT},
-        "protocol": "vless",
-        "settings": {
-            "clients": [{
-                "id": "${ID}"
-            }],
-            "decryption": "none"
-        },
-        "streamSettings": {
-            "network": "ws",
-            "wsSettings": {
-                "path": "${WSPATH}"
+    "inbounds": [
+        {
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "e80e01de-cf8a-432c-b207-224e89b4a572",
+                        "flow": "xtls-rprx-vision"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "partners.playstation.net:443",
+                    "xver": 0,
+                    "serverNames": [
+                        "partners.playstation.net"
+                    ],
+                    "privateKey": "yJ47h5RJDwsrLE2QzxqSPVNt112h3tQWmhKEvfOAE3E",
+                    "shortIds": ["8236"]
+                }
             }
         }
-    }],
-    "outbounds": [{
-        "protocol": "freedom"
-    }]
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "settings": {}
+        }
+    ]
 }
 EOF
 

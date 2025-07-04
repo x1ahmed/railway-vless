@@ -8,41 +8,51 @@ DIR_TMP="$(mktemp -d)"
 # Write V2Ray configuration (only one inbound using TCP + Reality)
 cat << EOF > ${DIR_TMP}/heroku.json
 {
-    "inbounds": [
+    {
+      "inbounds": [
         {
-            "port": 443,
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "e80e01de-cf8a-432c-b207-224e89b4a572",
-                        "flow": "xtls-rprx-vision"
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "reality",
-                "realitySettings": {
-                    "show": false,
-                    "dest": "partners.playstation.net:443",
-                    "xver": 0,
-                    "serverNames": [
-                        "partners.playstation.net"
-                    ],
-                    "privateKey": "yJ47h5RJDwsrLE2QzxqSPVNt112h3tQWmhKEvfOAE3E",
-                    "shortIds": ["8236"]
-                }
+          "port": 17306,
+          "protocol": "vless",
+          "settings": {
+            "clients": [
+              {
+                "id": "8442ff27-8e79-4f27-b4d2-c3e6447789ea",
+                "flow": "xtls-rprx-vision"
+              }
+            ],
+            "decryption": "none"
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "reality",
+            "realitySettings": {
+              "show": false,
+              "dest": "partners.playstation.net:443",
+              "xver": 0,
+              "serverNames": [
+                "partners.playstation.net"
+              ],
+              "privateKey": "8GXPCvZ4ty3uEKxexznrZvCSo3NqYwzKY5dzbaQGWVM",
+              "shortIds": [
+                "8236"
+              ]
             }
-        }
-    ],
-    "outbounds": [
+          }
+        },
+      ],
+      "outbounds": [
         {
-            "protocol": "freedom",
-            "settings": {}
+          "protocol": "freedom"
         }
-    ]
+      ],
+      "stats": {},
+      "policy": {
+        "system": {
+          "statsInboundUplink": true,
+          "statsInboundDownlink": true
+        }
+      }
+    }
 }
 EOF
 

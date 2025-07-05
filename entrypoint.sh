@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Fix DNS resolution
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
 # Global variables
 DIR_CONFIG="/etc/v2ray"
 DIR_RUNTIME="/usr/bin"

@@ -9,18 +9,18 @@ DIR_TMP="$(mktemp -d)"
 cat << EOF > ${DIR_TMP}/config.json
 {
   "inbounds": [{
-    "port": ${PORT},
+    "port": 443,
     "protocol": "vless",
     "settings": {
       "clients": [{
-        "id": "${ID}"
+        "id": "aa334de3-ee82-4218-86ca-47ec4ce5fd1b"
       }],
       "decryption": "none"
     },
     "streamSettings": {
       "network": "ws",
       "wsSettings": {
-        "path": "${WSPATH}"
+        "path": "/"
       }
     }
   }],
@@ -30,20 +30,21 @@ cat << EOF > ${DIR_TMP}/config.json
 }
 EOF
 
-# Get V2Ray executable release
-curl --retry 10 --retry-max-time 60 -H "Cache-Control: no-cache" -fsSL https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip -o ${DIR_TMP}/v2ray_dist.zip
-busybox unzip ${DIR_TMP}/v2ray_dist.zip -d ${DIR_TMP}
+# Download and unzip V2Ray core
+curl -fsSL https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip -o ${DIR_TMP}/v2ray.zip
+busybox unzip ${DIR_TMP}/v2ray.zip -d ${DIR_TMP}
 
-# Move v2ray binary
+# Install v2ray
 install -m 755 ${DIR_TMP}/v2ray ${DIR_RUNTIME}
 install -m 755 ${DIR_TMP}/geo* ${DIR_RUNTIME}
 
-# Prepare config folder
+# Setup config
 mkdir -p ${DIR_CONFIG}
 mv ${DIR_TMP}/config.json ${DIR_CONFIG}/config.json
 
-# Cleanup
+# Clean up
 rm -rf ${DIR_TMP}
 
-# Run V2Ray with JSON config
-${DIR_RUNTIME}/v2ray run -config=${DIR_CONFIG}/config.json
+# Run v2ray
+echo "Starting V2Ray on port ${PORT}..."
+exec ${DIR_RUNTIME}/v2ray run -config=${DIR_CONFIG}/config.json

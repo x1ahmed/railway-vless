@@ -17,7 +17,7 @@ cat << EOF > ${DIR_TMP}/config.json
       "protocol": "vless",
       "settings": {        "clients": [
           {
-            "id": "DZznX6FpK-4xdSaP_aX6u0diUTIBSXDjMyJrAZB6eCY",
+            "id": "3c129bec-f357-449d-abe5-66a33edbbed0",
             "flow": "xtls-rprx-vision"
           }
         ],

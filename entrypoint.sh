@@ -8,25 +8,51 @@ DIR_TMP="$(mktemp -d)"
 # Write V2Ray config directly with fixed values
 cat << EOF > ${DIR_TMP}/config.json
 {
-  "inbounds": [{
-    "port": 443,
-    "protocol": "vless",
-    "settings": {
-      "clients": [{
-        "id": "dsf1561d56fasdsad"
-      }],
-      "decryption": "none"
-    },
-    "streamSettings": {
-      "network": "ws",
-      "wsSettings": {
-        "path": "/"
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "port": 443,
+      "protocol": "vless",
+      "settings": {        "clients": [
+          {
+            "id": "DZznX6FpK-4xdSaP_aX6u0diUTIBSXDjMyJrAZB6eCY",
+            "flow": "xtls-rprx-vision"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "partners.playstation.net:443",
+          "xver": 0,
+          "serverNames": [
+            "partners.playstation.net"
+          ],
+          "privateKey": "4PqTjiQoiiOVgPTTTne42qHvgygFixTfVU2xO_-BL34",
+          "shortIds": [
+            "8236"
+          ]
+        }
       }
     }
-  }],
-  "outbounds": [{
-    "protocol": "freedom"
-  }]
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom"
+    }
+  ],
+  "stats": {},
+  "policy": {
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  }
 }
 EOF
 
